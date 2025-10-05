@@ -37,16 +37,28 @@ configurations {
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
+    maven {
+        name = "Nucleon Forge Axile"
+        url = uri("https://maven.pkg.github.com/Nucleon-Forge/axile")
+        credentials {
+            username = project.findProperty("USERNAME") as String? ?: ""
+            password = project.findProperty("PERSONAL_ACCESS_TOKEN") as String? ?: ""
+        }
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
 }
 
 extra["springCloudVersion"] = "2025.0.0"
 
 dependencies {
+    implementation("com.nucleonforge.axile:auto-configuration:1.0.0-SNAPSHOT")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    // implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.kafka:spring-kafka")
