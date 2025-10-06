@@ -28,6 +28,13 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+val javaVersionString =
+    JavaVersion
+        .toVersion(
+            java.toolchain.languageVersion
+                .get()
+                .asInt(),
+        ).toString()
 
 configurations {
     compileOnly {
@@ -80,6 +87,20 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+springBoot {
+    buildInfo {
+        properties {
+            additional =
+                mapOf(
+                    "encoding.source" to "UTF-8",
+                    "encoding.reporting" to "UTF-8",
+                    "java.source" to javaVersionString,
+                    "java.target" to javaVersionString,
+                )
+        }
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
@@ -110,13 +131,6 @@ tasks.withType<BootBuildImage> {
 
 gitProperties {
     failOnNoGitDirectory = false
-    keys =
-        listOf(
-            "git.branch",
-            "git.commit.id.abbrev",
-            "git.commit.user.name",
-            "git.commit.message.full",
-        )
 }
 
 spotless {
