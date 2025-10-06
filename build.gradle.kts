@@ -50,10 +50,16 @@ repositories {
     }
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+}
+
 extra["springCloudVersion"] = "2025.0.0"
 
 dependencies {
-    implementation("com.nucleonforge.axile:auto-configuration:1.0.0-SNAPSHOT")
+    implementation("com.nucleonforge.axile:auto-configuration:1.0.0-SNAPSHOT") {
+        isChanging = true
+    }
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-validation")
