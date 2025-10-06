@@ -41,8 +41,8 @@ repositories {
         name = "Nucleon Forge Axile"
         url = uri("https://maven.pkg.github.com/Nucleon-Forge/axile")
         credentials {
-            username = System.getenv("USERNAME")
-            password = System.getenv("PERSONAL_ACCESS_TOKEN")
+            username = System.getenv("USERNAME") ?: project.properties["USERNAME"].toString()
+            password = System.getenv("PERSONAL_ACCESS_TOKEN") ?: project.properties["PERSONAL_ACCESS_TOKEN"].toString()
         }
         mavenContent {
             snapshotsOnly()
