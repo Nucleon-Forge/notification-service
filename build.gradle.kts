@@ -47,10 +47,14 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     maven {
         name = "Nucleon Forge Axile"
-        url = uri("https://maven.pkg.github.com/Nucleon-Forge/axile")
+        url =
+            uri(
+                "https://" + (project.findProperty("nexus.host.port") as String? ?: System.getenv("NEXUS_HOST_PORT")) +
+                    "/repository/axile-monorepo/",
+            )
         credentials {
-            username = System.getenv("USERNAME") ?: project.properties["USERNAME"].toString()
-            password = System.getenv("PERSONAL_ACCESS_TOKEN") ?: project.properties["PERSONAL_ACCESS_TOKEN"].toString()
+            username = project.findProperty("nexus.user") as String? ?: System.getenv("NEXUS_USER")
+            password = project.findProperty("nexus.password") as String? ?: System.getenv("NEXUS_PASSWORD")
         }
         mavenContent {
             snapshotsOnly()
